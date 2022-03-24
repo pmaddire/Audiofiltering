@@ -18,6 +18,7 @@ from pysndfx import AudioEffectsChain
 from Chorus import *
 from operator import add
 from Ampfreqrange import *
+from LinearPitchEnvelope import *
 fx = (
     AudioEffectsChain()
     .reverb()
@@ -46,6 +47,7 @@ print("------------------------")
 print("1. Muffle Filter")
 print("2. Chorus Filter")
 print("3. Amplify frequency range")
+print("4. Linear Pitch Envelope")
 filter_choose = input("Enter desired filter number: ")
 save_src = input("Enter file name for edited sound Example: Chorus_bassline.wav: ")
 filter_choose = int(filter_choose)
@@ -113,6 +115,20 @@ elif filter_choose == 3:
     ampfreq_2 = ampfreqrange(data_1, samplerate, low, high, multiplier)
     data_0 = np.stack((ampfreq_1,ampfreq_2),axis=1)
 
+elif filter_choose == 4:
+    
+    #def LinearPitchEnvelope(input_data,fs,attack,decay,sustain,release):# %percentages for attack,decay,sustain,release added up to 1.
+    
+    attack = float(input("What would you like the attack percentage to be? Example :25=25%:  "))/100
+    decay = float(input("What would you like the decay percentage to be? Example :25=25%:  "))/100
+    sustain = float(input("What would you like the sustain percentage to be? Example :25=25%:  "))/100
+    release = float(input("What would you like the release percentage to be? Example :25=25%:  "))/100
+    
+    linearPitch_1 = linearpitchenvelope(data_1,samplerate,attack,decay,sustain,release)
+    linearPitch_2 = linearpitchenvelope(data_2,samplerate,attack,decay,sustain,release)
+
+    data_0 = np.stack((linearPitch_1,linearPitch_2),axis=1)
+    
 plt.clf()
 
 
