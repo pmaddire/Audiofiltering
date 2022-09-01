@@ -19,6 +19,9 @@ from Chorus import *
 from operator import add
 from Ampfreqrange import *
 from LinearPitchEnvelope import *
+from base_boost import *
+from pydub import AudioSegment
+
 fx = (
     AudioEffectsChain()
     .reverb()
@@ -38,7 +41,7 @@ pg.mixer.init()
 
 print("Audio editor start...")
 src = input("Please Enter name of wav file that will be edited. Example: src_Strong_Bassline.wav: ")
-
+save_process = 1
 
 
 
@@ -48,6 +51,7 @@ print("1. Muffle Filter")
 print("2. Chorus Filter")
 print("3. Amplify frequency range")
 print("4. Linear Pitch Envelope")
+print("5. Bass Boost")
 filter_choose = input("Enter desired filter number: ")
 save_src = input("Enter file name for edited sound Example: Chorus_bassline.wav: ")
 filter_choose = int(filter_choose)
@@ -102,8 +106,8 @@ elif filter_choose == 2:
 #chorus Filter def chor(input_data,fs,cutoff)
     cutoff = int(input("What would you like the cutoff frequency (frequencies to amp) to be?: "))
     chor_1 = chor(data_1, samplerate*2,cutoff)
-    chor_2 = chor(data_2, samplerate*2,cutoff)
-    data_0 = np.stack((chor_1,chor_2),axis=1)
+    #chor_2 = chor(data_2, samplerate*2,cutoff)
+    data_0 = np.stack((chor_1,chor_1),axis=1)
 
 elif filter_choose == 3:
     
@@ -129,6 +133,12 @@ elif filter_choose == 4:
 
     data_0 = np.stack((linearPitch_1,linearPitch_2),axis=1)
     
+elif filter_choose == 5:
+    attenuate_db = int(input("Attenuate_db:"))
+    accentuate_db = int(input("Accentuate_db:"))
+    start_bass(attenuate_db,accentuate_db,src,save_src)
+    save_process = 0
+    quit()
 plt.clf()
 
 

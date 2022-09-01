@@ -61,9 +61,9 @@ def chor(input_data,fs,cutoff):
     Low_Amp_data = np.fft.ifft(Low_Amp_data)
     Low_Amp_data = Low_Amp_data.real
     
-    c = 0
+    c = 1
     out = [0]*len(Low_Amp_data)
-    while c <= 100:
+    while c <= 75:
         print("iteration",c)
         rand = random.random()
         delay = 0.003 * rand
@@ -81,7 +81,7 @@ def chor(input_data,fs,cutoff):
     
     c = 0
     for i in out:
-       out[c]= (out[c]/100)
+       out[c]= (out[c]/60)
        c = c+1
  
 
